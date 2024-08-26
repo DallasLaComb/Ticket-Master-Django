@@ -1,0 +1,37 @@
+{% for event in events %}
+    <div class="row">
+        <div class="col-12 px-md-3 px-0">
+            <div class="card my-2 border shadow rounded px-md-3 px-2" style="width: 100%">
+                <div class="row my-3">
+                    <div class="col-md-4 col-12 d-flex align-items-center">
+                        <img class="img-fluid" src="{{ event.image_url }}">
+                    </div>
+                    <div class="col-md-4 col-6 my-3">
+                        <h1 class="h2">{{ event.event_name }}</h1>
+                        <p class="p text-secondary">{{ event.venue }}<br>{{ event.city }}, {{ event.state }}</p>
+                        <a href="{{ event.url }}" target="_blank" class="btn btn-primary">Find tickets</a>
+                        <form method="post" action="{% url 'bookmark_event' %}" class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="event_name" value="{{ event.event_name }}">
+                            <input type="hidden" name="local_date" value="{{ event.local_date }}">
+                            <input type="hidden" name="local_time" value="{{ event.local_time }}">
+                            <input type="hidden" name="venue" value="{{ event.venue }}">
+                            <input type="hidden" name="city" value="{{ event.city }}">
+                            <input type="hidden" name="state" value="{{ event.state }}">
+                            <input type="hidden" name="postal_code" value="{{ event.postal_code }}">
+                            <input type="hidden" name="image_url" value="{{ event.image_url }}">
+                            <button type="submit" class="btn p-0 border-0 bg-transparent">
+                                <i class="bi bi-bookmark-star h1 {% if event.is_bookmarked %}text-success{% endif %}"></i>
+                            </button>
+     
+                        </form>
+                    </div>
+                    <div class="col-md-4 col-6 text-end my-3">
+                        <h3 class="h3 text-success ">{{ event.local_date }}</h3>
+                        <h3 class="h3 text-success ">{{ event.local_time}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

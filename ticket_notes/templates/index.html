@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block page_title %}Ticket-Master HomePage{% endblock %}
+{% block content %}
+    <div class="container-fluid bg-primary p-2 text-white">
+        <h1 class="text-center">Ticketmaster</h1>
+        <h2 class="text-center">Quickly find tickets around you.</h2>
+        <form action="{% url 'index' %}" method="get" class="container">
+            <div class="row justify-content-center">
+                <div class="col-4 mx-0 p-0">
+                    <input type="text" class="form-control" name="genreArtistEvent" id="event" placeholder="Search by genre, artist, or event" aria-label="Search">
+                </div>
+                <div class="col-4 mx-0 p-0">
+                    <input type="text" class="form-control" name="city" id="city" placeholder="Enter a city e.g., Hartford" aria-label="City">
+                </div>
+                <div class="col-1 mx-0 p-0">
+                    <button type="submit" class="btn bg-danger text-white" id="search">SEARCH</button>
+                </div>
+            </div>
+        </form>
+        <div class="row justify-content-center">
+            <div class="col-9 bg-danger mt-2 py-2 rounded shadow d-none" id="displayError"></div>
+        </div>
+    </div>
+    <div class="container-fluid bg-white border rounded shadow" id="card-container">
+        {% for event in events %}
+        {% include "eventCard.html" %}
+        {% endfor %}
+    </div>
+{% endblock content %}
+

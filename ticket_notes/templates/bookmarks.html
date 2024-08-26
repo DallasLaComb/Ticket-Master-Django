@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container-fluid py-4">
+        {% for bookmark in bookmarks %}
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card border shadow rounded">
+                        <div class="card-body">
+                            <div class="row align-items-center g-3">
+                                <!-- Image section -->
+                                <div class="col-md-6 col-lg-4">
+                                    <img class="img-fluid rounded" src="{{ bookmark.image_url }}">
+                                </div>
+
+                                <!-- Content and form section -->
+                                <div class="col-md-6 col-lg-4">
+                                    <h2 class="h4">{{ bookmark.event_name }}</h2>
+                                    <p class="mb-2">{{ bookmark.venue }}<br>{{ bookmark.city }}, {{ bookmark.state }}</p>
+                                    <form method="post" action="{% url 'edit_note' bookmark.id %}" class="mb-3">
+                                        {% csrf_token %}
+                                        <textarea name="note" rows="3" class="form-control mb-2">{{ bookmark.note }}</textarea>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="bi bi-save"></i> Save Note
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- Date, time, and delete button section -->
+                                <div class="col-md-12 col-lg-4 text-md-start text-lg-end">
+                                    <h3 class="h5">{{ bookmark.local_date }}</h3>
+                                    <h3 class="h5 mb-3">{{ bookmark.local_time }}</h3>
+                                    <form method="post" action="{% url 'delete_bookmark' bookmark.id %}" class="text-end">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="bi bi-trash"></i> Delete Bookmark
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
